@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Magic Mirror Pro</title>
+	<meta charset="utf-8" />
+	<meta name="description" content="The magic Mirror Pro" />
+	<meta name="author" content="Eric" />
+	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+
+	<link rel="shortcut icon" href="/favicon.ico">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='mmp.js') }}"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='mmp.css') }}" media="all" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='weather/flaticon.css') }}">
+
+</head>
+<body>
+
+    <section id="weatherCurrent">
+        <aside id="temp">
+            <h1></h1>
+            <h2><em></em> <span>&deg;F</span></h2>
+            <h3>
+                L: <em></em>
+                <div class="spacer"></div>
+                H: <em></em>
+            </h3>
+        </aside>
+        <aside id="icon">
+            <div class="weather-icon flaticon-cloudy-sky"></div>
+            <h6></h6>
+            <h3>
+                <span>Wind:</span>
+                <em id="direction"></em>
+                <em id="speed"></em> MPH
+            </h3>
+            <h3>
+                <span>Humidity:</span>
+                <em id="humidity"></em> %
+            </h3>
+        </aside>
+        <div class="clear"></div>
+        <aside id="riseset">
+            <div class="weather-icon flaticon-sunrise-hour">
+                <em id="sunrise"></em> <span>am</span>
+            </div>
+            <div class="weather-icon flaticon-sunset">
+                <em id="sunset"></em> <span>pm</span>
+            </div>
+        </aside>
+        <div class="clear"></div>
+        <aside id="forecast">
+            <div class="row" id="forecast_1">
+                <div class="weather-icon flaticon-cloudy-sky"></div>
+                <em class="day"></em>
+                <div class="clear"></div>
+                <span>L:</span> <em class="low"></em>
+                <div class="spacer"></div>
+                <span>H:</span> <em class="high"></em>
+            </div>
+            <div class="row" id="forecast_2">
+                <div class="weather-icon flaticon-cloudy-sky"></div>
+                <em class="day"></em>
+                <div class="clear"></div>
+                <span>L:</span> <em class="low"></em>
+                <div class="spacer"></div>
+                <span>H:</span> <em class="high"></em>
+            </div>
+            <div class="row" id="forecast_3">
+                <div class="weather-icon flaticon-cloudy-sky"></div>
+                <em class="day"></em>
+                <div class="clear"></div>
+                <span>L:</span> <em class="low"></em>
+                <div class="spacer"></div>
+                <span>H:</span> <em class="high"></em>
+            </div>
+            <div class="row" id="forecast_4">
+                <div class="weather-icon flaticon-cloudy-sky"></div>
+                <em class="day"></em>
+                <div class="clear"></div>
+                <span>L:</span> <em class="low"></em>
+                <div class="spacer"></div>
+                <span>H:</span> <em class="high"></em>
+            </div>
+            <div class="row" id="forecast_5">
+                <div class="weather-icon flaticon-cloudy-sky"></div>
+                <em class="day"></em>
+                <div class="clear"></div>
+                <span>L:</span> <em class="low"></em>
+                <div class="spacer"></div>
+                <span>H:</span> <em class="high"></em>
+            </div>
+        </aside>
+    </section>
+
+    <section id="datetime">
+        <div id="main">
+            <p class="day"></p>
+            <p class="date"></p>
+            <p class="time"></p>
+        </div>
+        <div id="datetime_1" class="datetime">
+            <em></em>
+            <p class="daydate"></p>
+            <p class="time"></p>
+        </div>
+        <div id="datetime_2" class="datetime">
+            <em></em>
+            <p class="daydate"></p>
+            <p class="time"></p>
+        </div>
+    </section>
+
+    <div class="clear"></div>
+
+    <!-- End Top -->
+
+    <section id="news">
+        <h1>Latest News:</h1>
+        <ul></ul>
+    </section>
+
+    <script type="text/javascript">
+
+        extraClocks = {
+            '1': {{ CLOCK_1|tojson }},
+            '2': {{ CLOCK_2|tojson }}
+        }
+
+        updateClocks();
+        setInterval(updateClocks, 1000);
+
+        updateWeather({{ ZIP_CODE|safe }});
+        updateNews();
+
+    </script>
+
+    <input type="hidden" id="cityId" />
+
+</body>
+</html>
