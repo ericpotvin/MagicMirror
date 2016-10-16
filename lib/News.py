@@ -64,4 +64,3 @@ class News(object):
             items[current] = html_parser.unescape(text)
 
         return items
-

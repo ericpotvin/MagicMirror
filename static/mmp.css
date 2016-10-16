@@ -25,6 +25,7 @@ body {
 	height: 100%;
 	line-height: 1;
 	padding: 2em;
+	position:relative;
 }
 body, html {
     overflow-x: hidden;
@@ -53,124 +54,148 @@ ul {
     list-style-type: none;
 }
     ul li {
-        margin: 1em 0;
+        line-height: 1.3em;
+        margin: 0.6em 0;
     }
 
-
+.centered {
+    display:none;
+    position: fixed; /* or absolute */
+    top: 50%;
+    left: 45%;
+}
 @media all and (max-width: 850px) { }
+
+.loadingWrapper {
+    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
 
 /* Current weather */
 #weatherCurrent {
-    float: left;
     margin-right: 1em;
+    top: 1em;
+    left: 2em;
+    position: absolute;
 }
-#weatherCurrent aside {
-    display: inline-block;
-    position: relative;
-    float: left;
-}
-    /* Temp */
-    #weatherCurrent aside#temp {
+    #weatherCurrent .loading {
+        left: 18em;
+        position:fixed;
+        top: 6em;
+        z-index: 10000;
     }
-    #weatherCurrent aside#temp h1 {
-        font-size: 2em;
-    }
-    #weatherCurrent aside#temp h2 {
-        font-size: 7em;
-        margin-top: 0.25em;
-        margin-left: 0.1em;
-    }
-    #weatherCurrent aside#temp h2 em {
-        font-size: 1.5em;
-    }
-    #weatherCurrent aside#temp h2 span {
-        font-size: 0.75em;
-        left: -55px;
-        position: relative;
-        top: -75px;
-    }
-    #weatherCurrent aside#temp h3 {
-        color: #bbb;
-        font-size: 1.2em;
-        margin-top: 2em;
-        margin-left: 2.5em;
-    }
-    #weatherCurrent aside#temp h3 em {
-        color: #fff;
-        font-size: 2em;
-    }
-    #weatherCurrent aside#riseset {
-        margin-top: 1.5em;
-        margin-left: 0.1em;
-    }
-
-    /* Icon */
-    #weatherCurrent aside#icon {
-        margin: auto;
-        padding-top: 2em;
-        text-align: center;
-    }
-    #weatherCurrent aside#icon .weather-icon {
-        font-size: 10em;
-    }
-    #weatherCurrent aside#icon h6 {
-        font-size: 3em;
-    }
-    #weatherCurrent aside#icon h3 {
-        font-size: 1.5em;
-        margin-top: 1em;
-    }
-    #weatherCurrent aside#icon h3 em {
-        font-weight: bold;
-    }
-    #weatherCurrent aside#icon h3 span {
-        color: #bbb;
-    }
-
-    /* sunset/sunrise */
-    #weatherCurrent aside#riseset .weather-icon {
-        font-size: 2em;
-    }
-    #weatherCurrent aside#riseset div em {
-        font-size: 0.7em;
-    }
-    #weatherCurrent aside#riseset div span {
-        font-size: 0.5em;
-        text-transform: uppercase;
-    }
-
-    /* Forecast */
-    #weatherCurrent aside#forecast {
-        margin-top: 2em;
-        font-size: 1.5em;
-    }
-    #weatherCurrent aside#forecast .spacer {
-        margin: 0 0.4em;
-    }
-    #weatherCurrent aside#forecast div.row {
-        font-size: 1.5em;
-        margin-bottom: 1em;
-    }
-    #weatherCurrent aside#forecast div.row em.day {
+    #weatherCurrent aside {
         display: inline-block;
-        margin-bottom: 0.4em;
-        width: 200px;
+        position: relative;
     }
-    #weatherCurrent aside#forecast div.row span {
-        color: #bbb;
-        font-size: 0.6em;
-    }
-    #weatherCurrent aside#forecast .weather-icon {
-        display: inline;
-        font-size: 1.2em;
-    }
+        /* Temp */
+        #weatherCurrent aside#temp {
+        }
+        #weatherCurrent aside#temp h1 {
+            font-size: 2em;
+        }
+        #weatherCurrent aside#temp h2 {
+            font-size: 7em;
+            margin-top: 0.25em;
+            margin-left: 0.1em;
+        }
+        #weatherCurrent aside#temp h2 em {
+            font-size: 1.5em;
+        }
+        #weatherCurrent aside#temp h2 span {
+            font-size: 0.75em;
+            left: -55px;
+            position: relative;
+            top: -75px;
+        }
+        #weatherCurrent aside#temp h3 {
+            color: #bbb;
+            font-size: 1.2em;
+            margin-top: 2em;
+            margin-left: 2.5em;
+        }
+        #weatherCurrent aside#temp h3 em {
+            color: #fff;
+            font-size: 2em;
+        }
+        #weatherCurrent aside#riseset {
+            margin-top: 1.5em;
+            margin-left: 0.1em;
+        }
+
+        /* Icon */
+        #weatherCurrent aside#icon {
+            margin: auto;
+            padding-top: 2em;
+            text-align: center;
+        }
+        #weatherCurrent aside#icon .weather-icon {
+            font-size: 10em;
+        }
+        #weatherCurrent aside#icon h6 {
+            font-size: 3em;
+        }
+        #weatherCurrent aside#icon h3 {
+            font-size: 1.5em;
+            margin-top: 1em;
+        }
+        #weatherCurrent aside#icon h3 em {
+            font-weight: bold;
+        }
+        #weatherCurrent aside#icon h3 span {
+            color: #bbb;
+        }
+
+        /* sunset/sunrise */
+        #weatherCurrent aside#riseset .weather-icon {
+            font-size: 2em;
+        }
+        #weatherCurrent aside#riseset div em {
+            font-size: 0.7em;
+        }
+        #weatherCurrent aside#riseset div span {
+            font-size: 0.5em;
+            text-transform: uppercase;
+        }
+
+        /* Forecast */
+        #weatherCurrent aside#forecast {
+            margin-top: 2em;
+            font-size: 1.5em;
+        }
+        #weatherCurrent aside#forecast .spacer {
+            margin: 0 0.4em;
+        }
+        #weatherCurrent aside#forecast div.row {
+            font-size: 1.5em;
+            margin-bottom: 1em;
+        }
+        #weatherCurrent aside#forecast div.row em.day {
+            display: inline-block;
+            margin-bottom: 0.4em;
+            width: 200px;
+        }
+        #weatherCurrent aside#forecast div.row span {
+            color: #bbb;
+            font-size: 0.6em;
+        }
+        #weatherCurrent aside#forecast .weather-icon {
+            display: inline;
+            font-size: 1.2em;
+        }
 
 /* Date and Time */
 #datetime {
     display: block;
-    float: right;
     min-height: 1em;
+    position: absolute;
     text-align: right;
+    top: 1em;
+    right: 2em;
     width: 40%;
 }
     /* Main */
@@ -219,9 +244,18 @@ ul {
 
 /* News */
 #news {
+    bottom: 4em;
     position: absolute;
-    bottom: 0;
+    right: 2em;
+    text-align: right;
+    width: 35%;
 }
+    #news .loading {
+        bottom: 4em;
+        position:fixed;
+        right: 8em;
+        z-index: 10000;
+    }
     #news h1 {
         font-weight: bold;
     }

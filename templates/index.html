@@ -9,8 +9,6 @@
 
 	<link rel="shortcut icon" href="/favicon.ico">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-	<script type="text/javascript" src="{{ url_for('static', filename='mmp.js') }}"></script>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='mmp.css') }}" media="all" />
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='weather/flaticon.css') }}">
 
@@ -18,6 +16,9 @@
 <body>
 
     <section id="weatherCurrent">
+        <img class="loading" src="{{ url_for('static', filename='default.gif') }}" />
+        <div class="loadingWrapper"></div>
+
         <aside id="temp">
             <h1></h1>
             <h2><em></em> <span>&deg;F</span></h2>
@@ -117,27 +118,27 @@
     <!-- End Top -->
 
     <section id="news">
+        <img class="loading" src="{{ url_for('static', filename='default.gif') }}" />
+        <div class="loadingWrapper"></div>
+
         <h1>Latest News:</h1>
         <ul></ul>
     </section>
 
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script type="text/javascript">
 
-        extraClocks = {
+        CLOCKS = {
             '1': {{ CLOCK_1|tojson }},
             '2': {{ CLOCK_2|tojson }}
         }
-
-        updateClocks();
-        setInterval(updateClocks, 1000);
-
-	zip = {{ ZIP_CODE|safe }};
-        updateWeather();
-        setInterval(updateWeather, 60000);
-
-	updateNews();
-        setInterval(updateNews, 60000);
+        ZIP_CODE = {{ ZIP_CODE|safe }};
+        REFRESH_RATE_WEATHER = {{ REFRESH_RATE_WEATHER|safe }};
+        REFRESH_RATE_NEWS = {{ REFRESH_RATE_NEWS|safe }};
 
     </script>
+    <script type="text/javascript" src="{{ url_for('static', filename='mmp.js') }}"></script>
+
 </body>
 </html>

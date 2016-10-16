@@ -3,6 +3,7 @@
 """
 
 import ConfigParser
+from os import path
 
 
 class Config(object):
@@ -10,23 +11,25 @@ class Config(object):
     """
 
     CONFIG_FILE = "config.ini"
-    MAIN_SECTION = "main"
+
+    WEATHER_SECTION = "weather"
+    DATETIME_SECTION = "datetime"
+    NEWS_SECTION = "news"
+
     FIELD_API_KEY_WEATHER = "weather_api_key"
     FIELD_API_KEY_ZIP_CODE = "zip_code"
-    DATETIME_SECTION = 'datetime'
+    FIELD_REFRESH_RATE = "refresh_rate"
     FIELD_DATE_TIME_1_TIMEZONE = 'city_1_timezone'
     FIELD_DATE_TIME_1_LABEL = 'city_1_label'
     FIELD_DATE_TIME_2_TIMEZONE = 'city_2_timezone'
     FIELD_DATE_TIME_2_LABEL = 'city_2_label'
 
-    def __init__(self):
-        pass
-
     @staticmethod
     def get_config(section, key):
         """ Get a config value
-        :param key: The key
-        :return: string
+            :param section: The section
+            :param key: The key
+            :return: string
         """
 
         config = ConfigParser.ConfigParser()
@@ -43,3 +46,7 @@ class Config(object):
             return ""
 
         return val
+
+    @staticmethod
+    def has_config():
+        return path.isfile(Config.CONFIG_FILE)

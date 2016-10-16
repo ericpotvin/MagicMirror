@@ -10,7 +10,6 @@ from flask import Flask
 from flask import send_from_directory
 from flask import render_template
 from os import path, getcwd
-import json
 
 WEB_SERVER = Flask(__name__, static_url_path='')
 
@@ -20,14 +19,21 @@ def root():
     """ Main page
         :return: string
     """
+
+    # Weather
     zip_code = Config.get_config(
-        Config.MAIN_SECTION,
+        Config.WEATHER_SECTION,
         Config.FIELD_API_KEY_ZIP_CODE
     )
+    refresh_rate_weather = Config.get_config(
+        Config.WEATHER_SECTION,
+        Config.FIELD_REFRESH_RATE
+    )
+
+    # Get date and time
     extra_clocks_1 = {}
     extra_clocks_2 = {}
 
-    # Get date and time
     clock_timezone_1 = Config.get_config(
         Config.DATETIME_SECTION,
         Config.FIELD_DATE_TIME_1_TIMEZONE
@@ -53,11 +59,19 @@ def root():
         extra_clocks_2['timezone'] = clock_timezone_2
         extra_clocks_2['label'] = clock_label_2
 
+    # News
+    refresh_rate_news = Config.get_config(
+        Config.NEWS_SECTION,
+        Config.FIELD_REFRESH_RATE
+    )
+
     return render_template(
         'index.html',
         ZIP_CODE=zip_code,
         CLOCK_1=extra_clocks_1,
-        CLOCK_2=extra_clocks_2
+        CLOCK_2=extra_clocks_2,
+        REFRESH_RATE_WEATHER=int(refresh_rate_weather),
+        REFRESH_RATE_NEWS=int(refresh_rate_news)
     )
 
 
@@ -99,8 +113,12 @@ def show_news():
 
 
 if __name__ == '__main__':
-    WEB_SERVER.run(
-        debug=True,
-        host='0.0.0.0',
-        threaded=True
-    )
+
+    if not Config.has_config():
+        print "Unable to find config.ini file"
+    else:
+        WEB_SERVER.run(
+            debug=True,
+            host='0.0.0.0',
+            threaded=True
+        )

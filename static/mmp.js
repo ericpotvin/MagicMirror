@@ -17,16 +17,16 @@ function updateClocks() {
     GetClock(null, '', 'main');
     setTimeout(GetClock, 1000);
 
-    if (typeof extraClocks != 'object') {
+    if (typeof CLOCKS != 'object') {
         return;
     }
 
-    if (jQuery.isEmptyObject(extraClocks['1'])) {
+    if (jQuery.isEmptyObject(CLOCKS['1'])) {
         return;
     }
 
     // Set Custom
-    $.each(extraClocks, function( index, value ) {
+    $.each(CLOCKS, function(index, value) {
         GetClock(value.timezone, value.label, 'datetime_' + (index));
     });
 }
@@ -59,7 +59,7 @@ function GetClock(offset, label, div) {
     var nsec = d.getSeconds();
     var ampm;
 
-    if (nhour ==0 ) {
+    if (nhour ==0) {
         ampm = " AM";
         nhour = 12;
     }
@@ -95,13 +95,31 @@ function GetClock(offset, label, div) {
     $('#' + div + ' .time').html(nhour + ":" + nmin + ":" + nsec + ampm);
 }
 
+function showLoad(div) {
+    icon = '#' + div + ' .loading';
+    wrapper = '#' + div + ' .loadingWrapper';
+
+    $(icon).show();
+    $(wrapper).css('background-color', 'rgba(0, 0, 0, 0.85)');
+}
+function hideLoad(div) {
+    icon = '#' + div + ' .loading';
+    wrapper = '#' + div + ' .loadingWrapper';
+
+    $(icon).hide();
+    $(wrapper).css('background-color', 'rgba(0, 0, 0, 0)');
+}
+
 /*******************************************************************************
  Weather
 *******************************************************************************/
 function updateWeather() {
 
+    // Show loading
+    showLoad('weatherCurrent');
+
     // Current Weather
-    $.getJSON( "/weather/" + zip, function( data ) {
+    $.getJSON("/weather/" + ZIP_CODE, function(data) {
         // console.log(data);
 
         $('#temp h1').html(data.name);
@@ -120,7 +138,7 @@ function updateWeather() {
         $('#temp h3 em:last').html(data.main.temp_max)
 
         // Forecast
-        $.getJSON( "/forecast/" + data.id, function( data ) {
+        $.getJSON("/forecast/" + data.id, function(data) {
             var i = 1;
 
             jQuery.each(data, function(i, val) {
@@ -129,6 +147,9 @@ function updateWeather() {
                 $('#forecast #forecast_' + (i) + ' em.low').html(val['temp_min'])
                 $('#forecast #forecast_' + (i) + ' em.high').html(val['temp_max'])
             });
+
+            // hide loading
+            hideLoad('weatherCurrent');
         });
 
     });
@@ -138,10 +159,30 @@ function updateWeather() {
  News
 *******************************************************************************/
 function updateNews() {
-    $.getJSON( "/news/", function( data ) {
+
+    // Show loading
+    showLoad('news');
+
+    $.getJSON("/news/", function(data) {
         $('ul').empty();
-        $.each( data, function( key, val ) {
+        $.each(data, function(key, val) {
             $("ul").append('<li>' + val + ' </li>');
         });
+
+        // hide loading
+        hideLoad('news');
     });
 }
+
+/*******************************************************************************
+ Global
+*******************************************************************************/
+
+updateClocks();
+setInterval(updateClocks, 1000);
+
+updateWeather();
+setInterval(updateWeather, REFRESH_RATE_WEATHER * 1000);
+
+updateNews();
+setInterval(updateNews, REFRESH_RATE_NEWS * 1000);

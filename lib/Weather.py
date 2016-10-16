@@ -30,7 +30,10 @@ class Weather(object):
             :return: string
         """
 
-        api_key = Config.get_config(Config.FIELD_API_KEY_WEATHER)
+        api_key = Config.get_config(
+            Config.WEATHER_SECTION,
+            Config.FIELD_API_KEY_WEATHER
+        )
 
         url = Weather.BASE_URL + mode + \
             "?zip=" + str(zip_code) + ",us&" + \
