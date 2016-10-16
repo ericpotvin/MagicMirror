@@ -131,12 +131,13 @@
         updateClocks();
         setInterval(updateClocks, 1000);
 
-        updateWeather({{ ZIP_CODE|safe }});
-        updateNews();
+	zip = {{ ZIP_CODE|safe }};
+        updateWeather();
+        setInterval(updateWeather, 60000);
+
+	updateNews();
+        setInterval(updateNews, 60000);
 
     </script>
-
-    <input type="hidden" id="cityId" />
-
 </body>
 </html>

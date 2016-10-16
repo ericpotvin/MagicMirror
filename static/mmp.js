@@ -98,13 +98,11 @@ function GetClock(offset, label, div) {
 /*******************************************************************************
  Weather
 *******************************************************************************/
-function updateWeather(city) {
+function updateWeather() {
 
     // Current Weather
-    $.getJSON( "/weather/" + city, function( data ) {
+    $.getJSON( "/weather/" + zip, function( data ) {
         // console.log(data);
-        $('#cityId').val(data.id)
-
 
         $('#temp h1').html(data.name);
 
